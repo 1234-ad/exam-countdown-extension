@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="winter">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="theme-color" content="#e5e7eb" />
+		<title>Exam Countdown - New Tab</title>
+		<link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+		<link href="https://cdn.jsdelivr.net/combine/npm/daisyui@5/theme/winter.css,npm/daisyui@5/theme/sunset.css" rel="stylesheet" type="text/css" />
+		<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+		<script>
+			tailwind.config = {
+				theme: {
+					extend: {
+						fontFamily: {
+							sans: ["Inter", "sans-serif"],
+						},
+					},
+				},
+			};
+		</script>
+		<script>
+			function updateThemeIcon(theme) {
+				const icon = document.querySelector(".theme-icon");
+				const path = icon.querySelector("path");
+				if (!path) return;
+				const moonPath = "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z";
+				const sunPath =
+					"M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.59-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.59-1.591zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z";
+				if (theme === "winter") {
+					icon.setAttribute("fill", "none");
+					path.setAttribute("d", moonPath);
+				} else {
+					icon.setAttribute("fill", "currentColor");
+					path.setAttribute("d", sunPath);
+				}
+			}
+		</script>
+		<script>
+			(() => {
+				const savedTheme = localStorage.getItem("theme");
+				const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+				const initialTheme = savedTheme || (prefersDark ? "sunset" : "winter");
+				document.documentElement.setAttribute("data-theme", initialTheme);
+				const metaTheme = document.querySelector("meta[name=theme-color]");
+				localStorage.setItem("theme", initialTheme);
+				if (initialTheme == "winter") {
+					metaTheme.setAttribute("content", "#e5e7eb");
+				} else {
+					metaTheme.setAttribute("content", "#091319");
+				}
+				updateThemeIcon(initialTheme);
+			})();
+		</script>
+	</head>
+	<body class="font-sans bg-base-100">
+		<nav class="navbar bg-base-100 shadow-sm sticky top-0 z-50 border-b border-base-200">
+			<div class="navbar-start">
+				<a href="#" class="btn btn-ghost normal-case text-xl font-bold">Exam Countdown</a>
+			</div>
+			
+			<!-- Desktop Navigation -->
+			<div class="navbar-center hidden lg:flex">
+				<ul class="menu menu-horizontal px-1 gap-2">
+					<li><a href="#features" class="btn btn-ghost btn-sm">Features</a></li>
+					<li><a href="#gallery" class="btn btn-ghost btn-sm">Gallery</a></li>
+					<li><a href="#testimonials" class="btn btn-ghost btn-sm">Testimonials</a></li>
+					<li><a href="#faq" class="btn btn-ghost btn-sm">FAQ</a></li>
+				</ul>
+			</div>
+			
+			<div class="navbar-end">
+				<!-- Theme Toggle -->
+				<button data-toggle-theme="winter,sunset" class="btn btn-ghost btn-circle mr-2" aria-label="Toggle theme">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="theme-icon">
+						<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+					</svg>
+				</button>
+				
+				<!-- Mobile Menu Button -->
+				<div class="dropdown dropdown-end lg:hidden">
+					<div tabindex="0" role="button" class="btn btn-ghost btn-circle" aria-label="Open menu">
+						<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+						</svg>
+					</div>
+					<ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 border border-base-200">
+						<li><a href="#features" class="text-base">Features</a></li>
+						<li><a href="#gallery" class="text-base">Gallery</a></li>
+						<li><a href="#testimonials" class="text-base">Testimonials</a></li>
+						<li><a href="#faq" class="text-base">FAQ</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<!-- Hero Section -->
+		<section class="py-12 sm:py-16 md:py-20 scroll-mt-20">
+			<div class="max-w-6xl mx-auto px-4">
+				<div class="flex flex-col items-center gap-8 lg:flex-row lg:gap-12">
+					<!-- Left Content -->
+					<div class="flex-1 text-center lg:text-left w-full">
+						<h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">Focus on Your Exam Goals</h1>
+						<p class="text-base sm:text-lg md:text-xl text-base-content/70 mb-6 sm:mb-8 max-w-2xl mx-auto lg:mx-0">Transform your new tab into a study companion with customizable countdown timers for any exam.</p>
+						<!-- CTA Button -->
+						<div class="flex justify-center lg:justify-start mb-6">
+							<button id="cta-download-btn" class="btn btn-primary btn-lg gap-2" aria-label="Download Exam Countdown">
+								<span class="inline-flex items-center justify-center w-5 h-5" aria-hidden="true">
+									<svg width="100%" height="100%" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true" focusable="false" style="display: block">
+										<path
+											d="M12.4239 16.75C12.2079 16.75 12.0132 16.6587 11.8763 16.5126L7.26675 11.9059C6.97376 11.6131 6.97361 11.1382 7.26641 10.8452C7.55921 10.5523 8.03408 10.5521 8.32707 10.8449L11.6739 14.1896L11.6739 4C11.6739 3.58579 12.0096 3.25 12.4239 3.25C12.8381 3.25 13.1739 3.58579 13.1739 4L13.1739 14.1854L16.5168 10.8449C16.8098 10.5521 17.2846 10.5523 17.5774 10.8453C17.8702 11.1383 17.87 11.6131 17.5771 11.9059L13.0021 16.4776C12.8646 16.644 12.6566 16.75 12.4239 16.75Z"
+											fill="currentColor"
+										/>
+										<path d="M5.17188 16C5.17188 15.5858 4.83609 15.25 4.42188 15.25C4.00766 15.25 3.67188 15.5858 3.67188 16V18.5C3.67188 19.7426 4.67923 20.75 5.92188 20.75H18.9227C20.1654 20.75 21.1727 19.7426 21.1727 18.5V16C21.1727 15.5858 20.837 15.25 20.4227 15.25C20.0085 15.25 19.6727 15.5858 19.6727 16V18.5C19.6727 18.9142 19.337 19.25 18.9227 19.25H5.92188C5.50766 19.25 5.17188 18.9142 5.17188 18.5V16Z" fill="currentColor" />
+									</svg>
+								</span>
+								Add to Browser
+							</button>
+						</div>
+						<!-- Browser Links -->
+						<div class="flex flex-wrap gap-3 justify-center lg:justify-start items-center mb-6">
+							<div class="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-sm text-primary">
+								<span class="h-2 w-2 rounded-full bg-primary" aria-hidden="true"></span>
+								<a href="https://chromewebstore.google.com/detail/mhjcpnnmmalddidegkfcempomlpkkdan" target="_blank" rel="noopener noreferrer" class="font-medium no-underline text-primary hover:text-primary/90" aria-label="Open Chrome Web Store (Chromium Browsers)">Chromium</a>
+							</div>
+							<div class="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-sm text-primary">
+								<span class="h-2 w-2 rounded-full bg-primary" aria-hidden="true"></span>
+								<a href="https://addons.mozilla.org/en-US/firefox/addon/exam-countdown/" target="_blank" rel="noopener noreferrer" class="font-medium no-underline text-primary hover:text-primary/90" aria-label="Open Firefox Web Store (Firefox Browsers)">Firefox</a>
+							</div>
+						</div>
+					</div>
+					<!-- Right Content - Preview Card -->
+					<div class="flex-1 w-full max-w-lg">
+						<div class="relative mx-auto rounded-3xl border border-base-200 bg-base-100/80 p-4 sm:p-6 shadow-xl backdrop-blur">
+							<div class="relative grid gap-3">
+								<div class="rounded-2xl bg-primary/10 p-3 sm:p-4">
+									<h2 class="text-xs sm:text-sm font-semibold uppercase tracking-wide text-primary">11 Days Left</h2>
+									<p class="mt-1 sm:mt-2 text-lg sm:text-xl font-semibold text-base-content">Calculus II</p>
+								</div>
+								<div class="grid gap-2 rounded-2xl bg-base-200/80 p-3 sm:p-4 text-left">
+									<div class="flex items-center gap-2 text-sm text-base-content/70">
+										<span class="inline-flex h-2 w-2 rounded-full bg-success"></span>
+										<span>Focus Playlist : <strong class="text-base-content">Lo-Fi Deep Focus</strong></span>
+									</div>
+									<div class="rounded-xl bg-base-100 p-3">
+										<p class="text-sm text-base-content/70">Quote for today</p>
+										<p class="mt-1 text-base font-semibold text-base-content">"Discipline is choosing between what you want now and what you want most."</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- STATS -->
+		<div class="flex justify-center mb-4 mt-4">
+			<div class="stats shadow dark:shadow-lg stats-vertical lg:stats-horizontal border border-base-300 rounded-2xl w-3/5 mx-auto">
+				<div class="stat place-items-center py-4">
+					<div class="stat-value text-2xl sm:text-3xl">4.8 ★</div>
+					<div class="stat-title text-xs sm:text-sm">Chrome Webstore Rating</div>
+				</div>
+				<div class="stat place-items-center py-4">
+					<div class="stat-value text-2xl sm:text-3xl">5.0 ★</div>
+					<div class="stat-title text-xs sm:text-sm">Firefox FMO Rating</div>
+				</div>
+				<div class="stat place-items-center py-4">
+					<div class="stat-value text-2xl sm:text-3xl">600+</div>
+					<div class="stat-title text-xs sm:text-sm">Total Downloads</div>
+				</div>
+			</div>
+		</div>
+		<!-- FEATURE HIGHLIGHTS -->
+		<section id="features" class="py-12 sm:py-16 md:py-20 scroll-mt-20">
+			<div class="max-w-6xl mx-auto px-4">
+				<h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-12">Everything To Keep You On Track</h2>
+				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+					<!-- Feature 1 -->
+					<div class="feature-card bg-base-100 rounded-2xl p-6 shadow-lg border border-base-300 hover:shadow-md text-center">
+						<div class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary mb-4">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<circle cx="12" cy="12" r="10"></circle>
+								<polyline points="12 6 12 12 16 14"></polyline>
+							</svg>
+						</div>
+						<h3 class="text-lg font-semibold mb-2">Countdown Timer</h3>
+						<p class="text-sm text-base-content/70">Keep motivated with exam countdowns</p>
+					</div>
+					<!-- Feature 2 -->
+					<div class="feature-card bg-base-100 rounded-2xl p-6 shadow-lg border border-base-300 hover:shadow-md text-center">
+						<div class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-secondary/10 text-secondary mb-4">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M9 18V5l12-2v13"></path>
+								<circle cx="6" cy="18" r="3"></circle>
+								<circle cx="18" cy="16" r="3"></circle>
+							</svg>
+						</div>
+						<h3 class="text-lg font-semibold mb-2">Focus Audio</h3>
+						<p class="text-sm text-base-content/70">YouTube playlists and music to keep you focused</p>
+					</div>
+					<!-- Feature 3 -->
+					<div class="feature-card bg-base-100 rounded-2xl p-6 shadow-lg border border-base-300 hover:shadow-md text-center">
+						<div class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-accent/10 text-accent mb-4">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+							</svg>
+						</div>
+						<h3 class="text-lg font-semibold mb-2">Daily Quotes</h3>
+						<p class="text-sm text-base-content/70">Stay inspired during study sessions</p>
+					</div>
+					<!-- Feature 4 -->
+					<div class="feature-card bg-base-100 rounded-2xl p-6 shadow-lg border border-base-300 hover:shadow-md text-center">
+						<div class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary mb-4">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+								<polyline points="9 11 12 14 22 4"></polyline>
+							</svg>
+						</div>
+						<h3 class="text-lg font-semibold mb-2">Custom Wallpapers</h3>
+						<p class="text-sm text-base-content/70">Personalize with your own images</p>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- GALLERY SECTION -->
+		<section id="gallery" class="scroll-mt-20">
+			<div class="w-full">
+				<h2 class="text-2xl sm:text-3xl font-bold my-6 sm:my-10 text-center px-4">See Your Tab In Action</h2>
+				<div class="w-full px-2 sm:px-4 md:max-w-6xl md:mx-auto">
+					<div class="relative">
+						<div data-slider-container tabindex="0" class="overflow-hidden rounded-2xl sm:rounded-3xl border border-base-300 bg-base-100 shadow-xl focus:outline-none focus:ring-2 focus:ring-primary/60 w-full">
+							<div class="flex transition-transform duration-500 ease-out aspect-[16/9] sm:aspect-[4/3] md:aspect-[16/10]" data-slider>
+								<div class="w-full flex-shrink-0" data-slide aria-hidden="false">
+									<img src="https://raw.githubusercontent.com/SpreadSheets600/exam-countdown-extension/c2b64e86421ca0509dfa312a6a1397d4862d74bc/assets/screenshots/image-1.png" alt="Customizable countdown widgets" class="h-full w-full object-cover" loading="lazy" decoding="async" data-prefetch="true" />
+								</div>
+								<div class="w-full flex-shrink-0" data-slide aria-hidden="true">
+									<img src="https://raw.githubusercontent.com/SpreadSheets600/exam-countdown-extension/c2b64e86421ca0509dfa312a6a1397d4862d74bc/assets/screenshots/image-2.png" alt="Focus music player" class="h-full w-full object-cover" loading="lazy" decoding="async" data-prefetch="true" />
+								</div>
+								<div class="w-full flex-shrink-0" data-slide aria-hidden="true">
+									<img src="https://raw.githubusercontent.com/SpreadSheets600/exam-countdown-extension/c2b64e86421ca0509dfa312a6a1397d4862d74bc/assets/screenshots/image-3.png" alt="Motivational quotes widget" class="h-full w-full object-cover" loading="lazy" decoding="async" data-prefetch="true" />
+								</div>
+								<div class="w-full flex-shrink-0" data-slide aria-hidden="true">
+									<img src="https://raw.githubusercontent.com/SpreadSheets600/exam-countdown-extension/c2b64e86421ca0509dfa312a6a1397d4862d74bc/assets/screenshots/image-4.png" alt="Custom wallpaper options" class="h-full w-full object-cover" loading="lazy" decoding="async" data-prefetch="true" />
+								</div>
+							</div>
+							<!-- Dots indicator -->
+							<div class="absolute bg-base-100 p-2 rounded-lg bottom-3 sm:bottom-4 left-1/2 flex -translate-x-1/2 gap-2 z-30" data-slider-dots aria-label="Select screenshot" role="tablist"></div>
+						</div>
+						<!-- Desktop Controls -->
+						<button data-slider-prev class="absolute right-2 sm:right-4 md:-right-16 top-1/2 -translate-y-1/2 btn btn-circle btn-sm sm:btn-md bg-base-100/90 backdrop-blur-sm border border-base-300 hover:bg-base-100 z-20" style="left: 10px" aria-label="Previous screenshot" onclick="window.galleryStopAutoSlide(); window.galleryGoToSlide((window.galleryCurrentIndex() - 1 + window.gallerySlidesLength) % window.gallerySlidesLength); window.galleryStartAutoSlide();">
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<polyline points="15 18 9 12 15 6"></polyline>
+							</svg>
+						</button>
+						<button data-slider-next class="absolute top-1/2 -translate-y-1/2 btn btn-circle btn-sm sm:btn-md bg-base-100/90 backdrop-blur-sm border border-base-300 hover:bg-base-100 z-20" style="right: 10px" aria-label="Next screenshot" onclick="window.galleryStopAutoSlide(); window.galleryGoToSlide((window.galleryCurrentIndex() + 1) % window.gallerySlidesLength); window.galleryStartAutoSlide();">
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<polyline points="9 18 15 12 9 6"></polyline>
+							</svg>
+						</button>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- TESTIMONIALS -->
+		<section id="testimonials" class="py-12 sm:py-16 md:py-20 scroll-mt-20">
+			<div class="max-w-6xl mx-auto px-4">
+				<h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-12">Loved By Students</h2>
+				<div class="flex justify-center items-center mb-12">
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
+						<article class="rounded-3xl border border-base-300 bg-base-100 p-4 sm:p-6 shadow-sm">
+							<p class="text-base text-base-content/80">"Great for aspirants"</p>
+							<div class="mt-4 sm:mt-6 flex items-center gap-3">
+								<img loading="lazy" decoding="async" src="https://api.dicebear.com/7.x/notionists-neutral/svg?seed=Vikram%20Hegde" alt="Avatar for Vikram Hegde" class="h-10 w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2" />
+								<div>
+									<p class="font-semibold">Vikram Hegde</p>
+									<p class="text-xs text-base-content/70">Chrome Webstore</p>
+								</div>
+							</div>
+						</article>
+						<article class="rounded-3xl border border-base-300 bg-base-100 p-4 sm:p-6 shadow-sm">
+							<p class="text-base text-base-content/80">"Great extension for students, looks cool and FREE?! Love the work!"</p>
+							<div class="mt-4 sm:mt-6 flex items-center gap-3">
+								<img loading="lazy" decoding="async" src="https://api.dicebear.com/7.x/notionists-neutral/svg?seed=Divya%20Singh" alt="Avatar for Divya Singh" class="h-10 w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2" />
+								<div>
+									<p class="font-semibold">Divya Singh</p>
+									<p class="text-xs text-base-content/70">Chrome Webstore</p>
+								</div>
+							</div>
+						</article>
+						<article class="rounded-3xl border border-base-300 bg-base-100 p-4 sm:p-6 shadow-sm">
+							<p class="text-base text-base-content/80">"working great without any glitches so far and the selection of background is great."</p>
+							<div class="mt-4 sm:mt-6 flex items-center gap-3">
+								<img loading="lazy" decoding="async" src="https://api.dicebear.com/7.x/notionists-neutral/svg?seed=Carnage" alt="Avatar for Carnage" class="h-10 w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2" />
+								<div>
+									<p class="font-semibold">Carnage</p>
+									<p class="text-xs text-base-content/70">Mozilla AMO</p>
+								</div>
+							</div>
+						</article>
+						<article class="rounded-3xl border border-base-300 bg-base-100 p-4 sm:p-6 shadow-sm">
+							<p class="text-base text-base-content/80">"This extension has transformed my study routine. Highly recommend!"</p>
+							<div class="mt-4 sm:mt-6 flex items-center gap-3">
+								<img loading="lazy" decoding="async" src="https://api.dicebear.com/7.x/notionists-neutral/svg?seed=Soham" alt="Avatar for Soham" class="h-10 w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2" />
+								<div>
+									<p class="font-semibold">Soham</p>
+									<p class="text-xs text-base-content/70">Simp XD</p>
+								</div>
+							</div>
+						</article>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- FAQ - Simplified -->
+		<section id="faq" class="py-12 sm:py-16 bg-base-100 scroll-mt-20">
+			<div class="max-w-3xl mx-auto px-4">
+				<h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-12">Questions Students Ask</h2>
+				<div class="space-y-3">
+					<details class="group bg-base-100 rounded-xl border border-base-300 p-4 sm:p-6 hover:border-primary/50 transition-colors">
+						<summary class="flex cursor-pointer list-none items-center justify-between text-left text-base sm:text-lg font-semibold">
+							<span>Does the countdown sync across devices?</span>
+							<span class="transition-transform group-open:rotate-45">
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<line x1="12" y1="5" x2="12" y2="19"></line>
+									<line x1="5" y1="12" x2="19" y2="12"></line>
+								</svg>
+							</span>
+						</summary>
+						<p class="mt-3 text-sm sm:text-base text-base-content/70">Yes, sign in with the same browser profile and Exam Countdown keeps your timers, playlists, and wallpaper preferences in sync.</p>
+					</details>
+					<details class="group bg-base-100 rounded-xl border border-base-300 p-4 sm:p-6 hover:border-primary/50 transition-colors">
+						<summary class="flex cursor-pointer list-none items-center justify-between text-left text-base sm:text-lg font-semibold">
+							<span>Does Exam Countdown work offline?</span>
+							<span class="transition-transform group-open:rotate-45">
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<line x1="12" y1="5" x2="12" y2="19"></line>
+									<line x1="5" y1="12" x2="19" y2="12"></line>
+								</svg>
+							</span>
+						</summary>
+						<p class="mt-3 text-sm sm:text-base text-base-content/70">Yes! Your countdowns, notes, and wallpapers are cached locally so you can stay on track even during no-wifi study sessions.</p>
+					</details>
+					<details class="group bg-base-100 rounded-xl border border-base-300 p-4 sm:p-6 hover:border-primary/50 transition-colors">
+						<summary class="flex cursor-pointer list-none items-center justify-between text-left text-base sm:text-lg font-semibold">
+							<span>Is Exam Countdown open source?</span>
+							<span class="transition-transform group-open:rotate-45">
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<line x1="12" y1="5" x2="12" y2="19"></line>
+									<line x1="5" y1="12" x2="19" y2="12"></line>
+								</svg>
+							</span>
+						</summary>
+						<p class="mt-3 text-sm sm:text-base text-base-content/70">Yes, it is! Feel free to make changes to the code and <a href="https://github.com/NovatraX/exam-countdown-extension" target="_blank" class="link link-primary">contribute to the project.</a></p>
+					</details>
+				</div>
+			</div>
+		</section>
+		<!-- Footer -->
+		<footer class="py-8 sm:py-10 bg-base-100">
+			<div class="max-w-6xl mx-auto px-4">
+				<div class="divider"></div>
+				<div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+					<div class="flex items-center">
+						<a class="btn btn-ghost" href="https://github.com/NovatraX/exam-countdown-extension" target="_blank" rel="noopener noreferrer" aria-label="Star project on GitHub">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="mr-2" aria-hidden="true" focusable="false">
+								<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+							</svg>
+							<span>Star on GitHub</span>
+						</a>
+					</div>
+					<div class="flex items-center gap-2">
+						<a class="btn btn-ghost btn-circle btn-sm" href="https://mastodon.social/@Novatra" target="_blank" aria-label="Mastodon">
+							<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-4 h-4">
+								<title>Mastodon</title>
+								<path
+									d="M23.268 5.313c-.35-2.578-2.617-4.61-5.304-5.004C17.51.242 15.792 0 11.813 0h-.03c-3.98 0-4.835.242-5.288.309C3.882.692 1.496 2.518.917 5.127.64 6.412.61 7.837.661 9.143c.074 1.874.088 3.745.26 5.611.118 1.24.325 2.47.62 3.68.55 2.237 2.777 4.098 4.96 4.857 2.336.792 4.849.923 7.256.38.265-.061.527-.132.786-.213.585-.184 1.27-.39 1.774-.753a.057.057 0 0 0 .023-.043v-1.809a.052.052 0 0 0-.02-.041.053.053 0 0 0-.046-.01 20.282 20.282 0 0 1-4.709.545c-2.73 0-3.463-1.284-3.674-1.818a5.593 5.593 0 0 1-.319-1.433.053.053 0 0 1 .066-.054c1.517.363 3.072.546 4.632.546.376 0 .75 0 1.125-.01 1.57-.044 3.224-.124 4.768-.422.038-.008.077-.015.11-.024 2.435-.464 4.753-1.92 4.989-5.604.008-.145.03-1.52.03-1.67.002-.512.167-3.63-.024-5.545zm-3.748 9.195h-2.561V8.29c0-1.309-.55-1.976-1.67-1.976-1.23 0-1.846.79-1.846 2.35v3.403h-2.546V8.663c0-1.56-.617-2.35-1.848-2.35-1.112 0-1.668.668-1.67 1.977v6.218H4.822V8.102c0-1.31.337-2.35 1.011-3.12.696-.77 1.608-1.164 2.74-1.164 1.311 0 2.302.5 2.962 1.498l.638 1.06.638-1.06c.66-.999 1.65-1.498 2.96-1.498 1.13 0 2.043.395 2.74 1.164.675.77 1.012 1.81 1.012 3.12z"
+								/>
+							</svg>
+						</a>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<script>
+			// Gallery functionality
+			let currentSlide = 0;
+			const slides = document.querySelectorAll('[data-slide]');
+			const totalSlides = slides.length;
+			let autoSlideInterval;
+
+			function updateSlider() {
+				const slider = document.querySelector('[data-slider]');
+				slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+				
+				// Update dots
+				const dotsContainer = document.querySelector('[data-slider-dots]');
+				dotsContainer.innerHTML = '';
+				for (let i = 0; i < totalSlides; i++) {
+					const dot = document.createElement('button');
+					dot.className = `w-2 h-2 rounded-full transition-colors ${i === currentSlide ? 'bg-primary' : 'bg-base-300'}`;
+					dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+					dot.onclick = () => {
+						stopAutoSlide();
+						goToSlide(i);
+						startAutoSlide();
+					};
+					dotsContainer.appendChild(dot);
+				}
+				
+				// Update aria-hidden
+				slides.forEach((slide, index) => {
+					slide.setAttribute('aria-hidden', index !== currentSlide);
+				});
+			}
+
+			function goToSlide(index) {
+				currentSlide = index;
+				updateSlider();
+			}
+
+			function nextSlide() {
+				currentSlide = (currentSlide + 1) % totalSlides;
+				updateSlider();
+			}
+
+			function prevSlide() {
+				currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+				updateSlider();
+			}
+
+			function startAutoSlide() {
+				autoSlideInterval = setInterval(nextSlide, 4000);
+			}
+
+			function stopAutoSlide() {
+				clearInterval(autoSlideInterval);
+			}
+
+			// Global functions for buttons
+			window.galleryGoToSlide = goToSlide;
+			window.galleryCurrentIndex = () => currentSlide;
+			window.gallerySlidesLength = totalSlides;
+			window.galleryStartAutoSlide = startAutoSlide;
+			window.galleryStopAutoSlide = stopAutoSlide;
+
+			// Initialize
+			updateSlider();
+			startAutoSlide();
+
+			// Pause auto-slide on hover
+			const sliderContainer = document.querySelector('[data-slider-container]');
+			sliderContainer.addEventListener('mouseenter', stopAutoSlide);
+			sliderContainer.addEventListener('mouseleave', startAutoSlide);
+
+			// Keyboard navigation
+			sliderContainer.addEventListener('keydown', (e) => {
+				if (e.key === 'ArrowLeft') {
+					stopAutoSlide();
+					prevSlide();
+					startAutoSlide();
+				} else if (e.key === 'ArrowRight') {
+					stopAutoSlide();
+					nextSlide();
+					startAutoSlide();
+				}
+			});
+
+			// Theme toggle functionality
+			document.addEventListener('DOMContentLoaded', function() {
+				const themeToggle = document.querySelector('[data-toggle-theme]');
+				if (themeToggle) {
+					themeToggle.addEventListener('click', function() {
+						const currentTheme = document.documentElement.getAttribute('data-theme');
+						const newTheme = currentTheme === 'winter' ? 'sunset' : 'winter';
+						
+						document.documentElement.setAttribute('data-theme', newTheme);
+						localStorage.setItem('theme', newTheme);
+						
+						const metaTheme = document.querySelector('meta[name=theme-color]');
+						if (newTheme === 'winter') {
+							metaTheme.setAttribute('content', '#e5e7eb');
+						} else {
+							metaTheme.setAttribute('content', '#091319');
+						}
+						
+						updateThemeIcon(newTheme);
+					});
+				}
+			});
+
+			// Smooth scrolling for navigation links
+			document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+				anchor.addEventListener('click', function (e) {
+					e.preventDefault();
+					const target = document.querySelector(this.getAttribute('href'));
+					if (target) {
+						target.scrollIntoView({
+							behavior: 'smooth',
+							block: 'start'
+						});
+						
+						// Close mobile menu if open
+						const dropdown = document.querySelector('.dropdown');
+						if (dropdown) {
+							dropdown.blur();
+						}
+					}
+				});
+			});
+
+			// CTA button functionality
+			document.getElementById('cta-download-btn').addEventListener('click', function() {
+				// Detect browser and redirect accordingly
+				const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+				const url = isFirefox 
+					? 'https://addons.mozilla.org/en-US/firefox/addon/exam-countdown/'
+					: 'https://chromewebstore.google.com/detail/mhjcpnnmmalddidegkfcempomlpkkdan';
+				window.open(url, '_blank');
+			});
+		</script>
+	</body>
+</html>
